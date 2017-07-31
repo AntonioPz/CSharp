@@ -8,7 +8,11 @@ namespace Ejemplo1
         {
             Console.WriteLine("Hello World!");
             Console.WriteLine("Hello World one more time!");
-            Console.WriteLine("old line of code");
+
+
+            Console.WriteLine("Message 1");
+            Console.WriteLine("Message 2");
+
             Console.Read();
         }
     }
