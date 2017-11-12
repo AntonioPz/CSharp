@@ -18,7 +18,7 @@ namespace IPMethods
 
                 //LocalIPAddress.GetYourOwnIpAddress();
 
-                LocalIPAddress.NetworkInfo();
+                //LocalIPAddress.NetworkInfo();
 
                 //Server myServer = new Server();
                 //myServer.GetServer(args);
