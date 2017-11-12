@@ -24,7 +24,7 @@ namespace BlobStorage
             string accesskey = "your-access-key";
             try
             {
-                //Add NuGet WindowsAzure.Storege
+                //Add NuGet WindowsAzure.Storage
                 StorageCredentials creden = new StorageCredentials(accountname, accesskey);
                 CloudStorageAccount acc = new CloudStorageAccount(creden, useHttps: true);
                 CloudBlobClient client = acc.CreateCloudBlobClient();
