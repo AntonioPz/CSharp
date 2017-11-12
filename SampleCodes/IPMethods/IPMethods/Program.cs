@@ -19,9 +19,11 @@ namespace IPMethods
                 //LocalIPAddress.GetYourOwnIpAddress();
 
                 LocalIPAddress.NetworkInfo();
-                Console.WriteLine("######################################################################");
+
                 //Server myServer = new Server();
                 //myServer.GetServer(args);
+
+                Console.WriteLine("######################################################################");
 
                 Console.WriteLine("Press 'enter' for try again or, press 'c' and 'enter' for clear screen");                
                 var key= Console.ReadLine();
