@@ -14,7 +14,7 @@ namespace IPMethods
         {
             while (true)
             {
-                //LocalIPAddress.RunIpAddressDetection("192.168.92.");
+                LocalIPAddress.RunIpAddressDetection("192.168.92.");
 
                 //LocalIPAddress.GetYourOwnIpAddress();
 

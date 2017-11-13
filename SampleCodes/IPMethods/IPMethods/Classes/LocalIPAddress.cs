@@ -16,7 +16,7 @@ namespace IPMethods.Class
         private static int instances = 0;
         private static object @lock = new object();
         private static int result = 0;
-        private static int timeOut = 250;
+        private static int timeOut = 5000;
         private static int ttl = 5;
         
         public static void RunIpAddressDetection(string BaseIP)
@@ -69,8 +69,18 @@ namespace IPMethods.Class
 
             if (e.Reply.Status == IPStatus.Success)
             {
-                Console.WriteLine(string.Concat("Active IP: ", e.Reply.Address.ToString()));
-                result += 1;
+                try
+                {
+                    //IPHostEntry host = Dns.GetHostByAddress(e.Reply.Address.ToString());
+                    //Console.WriteLine(string.Concat("Active IP: ", e.Reply.Address.ToString()," - ", host.HostName));
+                    Console.WriteLine(string.Concat("Active IP: ", e.Reply.Address.ToString()));
+                    result += 1;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error Ping_Completed: "+ ex.ToString());
+                }
+                
             }
             else
             {
@@ -104,7 +114,7 @@ namespace IPMethods.Class
 
             // Find host by name
             IPHostEntry iphostentry = Dns.GetHostByName(strHostName);
-
+            
             // Enumerate IP addresses
             foreach (IPAddress ipaddress in iphostentry.AddressList)
             {
