@@ -10,11 +10,23 @@ namespace IPMethods
 {
     class Program
     {
+        public static string ipAdd=null;
         static void Main(string[] args)
         {
             while (true)
             {
-                LocalIPAddress.RunIpAddressDetection("192.168.92.");
+                string newipadd = "";
+                char[] mca = LocalIPAddress.GetYourOwnIpAddress().ToString().ToCharArray();
+                int cout = 0;
+                for (int i = 0; i < mca.Length; i++)
+                {
+                    newipadd += mca[i];
+                    if (mca[i] == '.')
+                        cout++;
+                    if (cout==3)
+                        break;
+                }
+                LocalIPAddress.RunIpAddressDetection(newipadd);
 
                 //LocalIPAddress.GetYourOwnIpAddress();
 
@@ -25,11 +37,10 @@ namespace IPMethods
 
                 Console.WriteLine("######################################################################");
 
-                Console.WriteLine("Press 'enter' for try again or, press 'c' and 'enter' for clear screen");                
+                Console.WriteLine("Press 'enter' for try again or \nEnter 'c' for clear screen");                
                 var key= Console.ReadLine();
-                if (key=="c")
+                if (key == "c")
                     Console.Clear();
-                    
             }
         }
         

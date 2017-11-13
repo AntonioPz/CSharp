@@ -107,19 +107,20 @@ namespace IPMethods.Class
             pingers.Clear();
 
         }
-        public static void GetYourOwnIpAddress()
-        {
+        public static string GetYourOwnIpAddress()
+        {   
             // Get host name
             String strHostName = Dns.GetHostName();
-
+            string YourIPAddress = null;
             // Find host by name
             IPHostEntry iphostentry = Dns.GetHostByName(strHostName);
-            
+
             // Enumerate IP addresses
             foreach (IPAddress ipaddress in iphostentry.AddressList)
             {
-                Console.WriteLine(strHostName + ": " + ipaddress.ToString());
+                YourIPAddress = ipaddress.ToString();
             }
+            return YourIPAddress;
         }
         public static void NetworkInfo()
         {
