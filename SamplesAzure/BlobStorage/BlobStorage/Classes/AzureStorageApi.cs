@@ -154,6 +154,49 @@ namespace BlobStorage.Classes
                 }
             }
         }
+        public void GetBlob(string containerName, string blobName)
+        {
+            const string requestMethod = "GET";
+            const string storageServiceVersion = "2014-02-14";
+            var dateInRfc1123Format = DateTime.UtcNow.ToString("R", CultureInfo.InvariantCulture);
+            var canonicalizedHeaders = String.Format(
+                    "x-ms-date:{0}\nx-ms-version:{1}",
+                    dateInRfc1123Format,
+                    storageServiceVersion);
+            var canonicalizedResource = String.Format("/{0}/{1}/{2}", ACCOUNT_NAME, containerName, blobName);
+            var stringToSign = String.Format("{0}\n\n\n\n\n\n\n\n\n\n\n\n{1}\n{2}",
+                    requestMethod,
+                    canonicalizedHeaders,
+                    canonicalizedResource);
+            var authorizationHeader = CreateAuthorizationHeader(stringToSign);
+            var uri = new Uri(STORAGE_ENDPOINT + containerName + "/" + blobName);
+            var request = (HttpWebRequest)WebRequest.Create(uri);
+            request.Method = requestMethod;
+            request.Headers.Add("x-ms-date", dateInRfc1123Format);
+            request.Headers.Add("x-ms-version", storageServiceVersion);
+            request.Headers.Add("Authorization", authorizationHeader);
+            using (var response = (HttpWebResponse)request.GetResponse())
+            {
+                using (var stream = response.GetResponseStream())
+                {
+                    var reader = new StreamReader(stream, Encoding.UTF8);
+                    using (var memstream = new MemoryStream())
+                    {
+                        var buffer = new byte[512];
+                        var bytesRead = default(int);
+                        while ((bytesRead = reader.BaseStream.Read(buffer, 0, buffer.Length)) > 0)
+                            memstream.Write(buffer, 0, bytesRead);
+                        var data = memstream.ToArray();
+                        File.WriteAllBytes(blobName, data);
+                    }
+
+                }
+                using (var res = (HttpWebResponse)request.GetResponse())
+                {
+                    Console.WriteLine("GetBlob status code:{0}", res.StatusCode);
+                }
+            }
+        }
         public static string CreateAuthorizationHeader(string canonicalizedString)
         {
             string signature;
